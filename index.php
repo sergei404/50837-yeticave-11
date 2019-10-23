@@ -8,10 +8,10 @@ function getUserAuth($is_auth, $user_name)
 {
     if ($is_auth) {
         $htmlStr = '<div class="user-menu__logged">
-                 <p>' . $user_name . '</p>
-                 <a class="user-menu__bets" href="pages/                             my-bets.html">Мои ставки</a>
-                 <a class="user-menu__logout" href="#">Выход</a>
-                </div>';
+        <p>' . $user_name . '</p>
+        <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
+        <a class="user-menu__logout" href="#">Выход</a>
+      </div>';
     } else {
         $htmlStr = '<ul class="user-menu__list">
         <li class="user-menu__item">
