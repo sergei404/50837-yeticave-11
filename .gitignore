@@ -9,3 +9,6 @@ Thumbs.db
 vendor
 uploads/*
 !uploads/.gitkeep
+
+# настройки запуска с помощью docker-compose
+.env
