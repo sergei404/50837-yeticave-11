@@ -35,10 +35,10 @@ $adverts = [
     ['name' => 'Маска Oakley Canopy', 'category' => 'Разное', 'price' => 5400, 'url' => 'img/lot-6.jpg'],
 ];
 
-function getFormat(int $num) 
+function getFormat(float $num) 
 {
-    $num = number_format($num, 0, '', ' ');
-    return $num . ' &#8381;';
+    $num = number_format(ceil($num), 0, '', ' ');
+    return "{$num}  &#8381;";
 }
 
 
