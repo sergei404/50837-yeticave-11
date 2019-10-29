@@ -35,6 +35,12 @@ $adverts = [
     ['name' => 'Маска Oakley Canopy', 'category' => 'Разное', 'price' => 5400, 'url' => 'img/lot-6.jpg'],
 ];
 
+function getFormat(float $num) 
+{
+    $num = number_format(ceil($num), 0, '', ' ');
+    return "{$num}  &#8381;";
+}
+
 
 $list = '';
 for ($i=0; $i < count($adverts); $i++) {
@@ -48,7 +54,7 @@ for ($i=0; $i < count($adverts); $i++) {
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost">'.$adverts[$i]['price'].'<b class="rub">р</b></span>
+                            <span class="lot__cost">'.getFormat($adverts[$i]['price']).'</span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
