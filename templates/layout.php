@@ -30,11 +30,22 @@ require_once 'functions.php';
                 <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
 
                 <nav class="user-menu">
-
-                    <?php
-                    print(getUserAuth($isAuth, $nameUser));
-                    ?>
-
+                    <?php if($isAuth) : ?>
+                        <div class="user-menu__logged">
+                            <p><?= $nameUser; ?></p>
+                            <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
+                            <a class="user-menu__logout" href="#">Выход</a>
+                            </div>
+                    <?php else : ?>
+                        <ul class="user-menu__list">
+                            <li class="user-menu__item">
+                                <a href="#">Регистрация</a>
+                            </li>
+                            <li class="user-menu__item">
+                                <a href="#">Вход</a>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
                 </nav>
             </div>
         </header>
@@ -47,20 +58,11 @@ require_once 'functions.php';
         <nav class="nav">
             <ul class="nav__list container">
                 <!--заполните этот список из массива категорий-->
-                <!-- <?php foreach ($goods as $good) : ?>
-                    <li class="promo__item promo__item--boards">
-                        <a class="promo__link" href="pages/all-lots.html"><?= $good; ?></a>
+                <?php foreach ($goods as $good) : ?>
+                    <li class="nav__item">
+                        <a href="pages/all-lots.html"><?= $good; ?></a>
                     </li>
-                <?php endforeach; ?> -->
-                <?php 
-                for ($i=0; $i < count($goods); $i++) {
-                    echo '<li class="nav__item">
-                        <a href="pages/all-lots.html">' . $goods[$i] . '</a>
-                    </li>';
-                } 
-                ?>
-
-
+                <?php endforeach; ?>
             </ul>
         </nav>
         <div class="main-footer__bottom container">

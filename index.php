@@ -1,6 +1,5 @@
 <?php
-$is_auth = rand(0, 1);
-$user_name = 'Сергей'; 
+
 require_once 'data.php';
 require_once 'functions.php';
 
@@ -13,7 +12,7 @@ $layout_content = include_template('layout.php', [
     'goods' => $goods,
     'title' => 'YetiCave - Главная страница',
     'isAuth' => $is_auth,
-    'nameUser' => $user_name
+    'nameUser' => $user_name,
 ]);
 
 
