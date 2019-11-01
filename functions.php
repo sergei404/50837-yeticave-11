@@ -1,8 +1,5 @@
 <?php
 
-$is_auth = rand(0, 1);
-$user_name = 'Сергей'; // укажите здесь ваше имя
-
 function getUserAuth($is_auth, $user_name)
 {
     if ($is_auth) {

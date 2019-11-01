@@ -32,7 +32,7 @@ require_once 'functions.php';
                 <nav class="user-menu">
 
                     <?php
-                    print(getUserAuth($is_auth, $user_name));
+                    print(getUserAuth($isAuth, $nameUser));
                     ?>
 
                 </nav>
