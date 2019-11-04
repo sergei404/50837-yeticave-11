@@ -24,4 +24,33 @@ function include_template($name, $data) {
     return $result;
 }
 
+
+function esc($str) {
+    $text = htmlspecialchars($str);
+        
+	return $text;
+}
+
+function randTime(int $from, int $to) {
+    $date = date('Y-m-d H:i', rand($from, $to));
+    return $date;
+}
+
+
+function diffTime($timeValue) {
+    $datetime1 = date_create($timeValue);
+    $datetime2 = date_create("now");
+    $interval = $datetime1->diff($datetime2);
+    $arrayDiff = [];
+    array_push($arrayDiff, ($interval->h + $interval->d * 24), $interval->i);
+    return $arrayDiff;
+}
+
+function paddingLine($value) {
+    if((strlen(strval($value)) === 1)) {
+        return str_pad($value, 2, "0", STR_PAD_LEFT);
+    } 
+
+    return $value;
+}
 ?>
