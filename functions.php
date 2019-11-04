@@ -42,15 +42,13 @@ function diffTime($timeValue) {
     $datetime2 = date_create("now");
     $interval = $datetime1->diff($datetime2);
     $arrayDiff = [];
-    array_push($arrayDiff, ($interval->h + $interval->d * 24 * $interval->m), $interval->i);
+    array_push($arrayDiff, ($interval->h + $interval->d * 24 + $interval->m * $interval->d * 24), $interval->i);
     return $arrayDiff;
 }
 
-function paddingLine(int $value) {
-    if((strlen(strval($value)) === 1)) {
-        return str_pad($value, 2, "0", STR_PAD_LEFT);
-    } 
-
-    return strval($value);
+function paddingLine(int $value)  : string {
+    
+    return str_pad($value, 2, "0", STR_PAD_LEFT);
+   
 }
 ?>
