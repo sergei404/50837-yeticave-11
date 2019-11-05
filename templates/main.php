@@ -17,7 +17,7 @@
         <?php 
         
             foreach($adverts as $advert) {
-                if((diffTime($advert['expiration date'])[0] === 0) && (diffTime($advert['expiration date'])[1] === 0)) {
+                if((diffTime($advert['expiration date'])[0] <= 0) && (diffTime($advert['expiration date'])[1] <= 0)) {
                     continue;
                 } else {
                     print(include_template('advert.php', ['advert' => $advert])); 
