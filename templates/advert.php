@@ -13,9 +13,9 @@
 
             <div class="lot__timer timer <?php if(diffTime($advert['expiration date'])[0] < 1) {echo 'timer--finishing';} ?>">
                 <?php
-                $hours = paddingLine(diffTime($advert['expiration date'])[0]);
-                $minutes = paddingLine(diffTime($advert['expiration date'])[1]);
-                print($hours . ' ' . $minutes);
+                    $hours = paddingLine(diffTime($advert['expiration date'])[0]);
+                    $minutes = paddingLine(diffTime($advert['expiration date'])[1]);
+                    print($hours . ' ' . $minutes);
                 ?>
             </div>
         </div>
