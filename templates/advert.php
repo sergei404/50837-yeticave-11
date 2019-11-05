@@ -15,7 +15,7 @@
                 <?php
                     $hours = paddingLine(diffTime($advert['expiration date'])[0]);
                     $minutes = paddingLine(diffTime($advert['expiration date'])[1]);
-                    print($hours . ' ' . $minutes);
+                    print($hours . ' : ' . $minutes);
                 ?>
             </div>
         </div>

@@ -23,21 +23,14 @@ function esc($str) {
     return $text;
 }
 
-function randTime(int $from, int $to) {
-    $date = rand($from, $to);
-    return $date;
-}
 
 function diffTime($timeValue) {
-    $result = $timeValue - time();
+    $result = strtotime($timeValue) - time();
     $hours = floor($result / 3600);
     $minutes = floor(($result % 3600) / 60);
-    // $datetime1 = date_create($timeValue);
-    // $datetime2 = date_create("now");
-    // $interval = $datetime1->diff($datetime2);
     $arrayDiff[] = $hours;
     $arrayDiff[] = $minutes;
-    // array_push($arrayDiff, ($interval->h + $interval->d * 24 + $interval->m * 30 * 24), $interval->i);
+    
     return $arrayDiff;
 }
 
