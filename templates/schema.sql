@@ -8,14 +8,14 @@ CREATE TABLE lot (
     title VARCHAR (256),
     discription VARCHAR (256),
     photo VARCHAR (256),
-    starting_price TINYINT,
+    starting_price INT,
     completion_date DATETIME,
-    step TINYINT);
+    step INT);
 
 CREATE TABLE rate (
     id INT PRIMARY KEY AUTO_INCREMENT,
     date DATETIME,
-    sum TINYINT);
+    sum INT);
 
 CREATE TABLE category (
     id INT PRIMARY KEY AUTO_INCREMENT,
