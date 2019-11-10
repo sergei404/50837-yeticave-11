@@ -25,7 +25,7 @@ CREATE TABLE lots (
     completion_date DATETIME,
     step INT UNSIGNED,
     author_user_id INT UNSIGNED,
-    victiry_user_id INT UNSIGNED,
+    victory_user_id INT UNSIGNED,
     category_id INT UNSIGNED);
 
 CREATE TABLE rates (
