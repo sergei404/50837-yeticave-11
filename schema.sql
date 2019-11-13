@@ -3,20 +3,20 @@ CREATE DATABASE yeticave;
 USE yeticave;
 
 CREATE TABLE categories (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR (128),
     character_code VARCHAR (70));
 
 CREATE TABLE users (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
     date DATETIME,
-    email VARCHAR (129),
+    email VARCHAR (129) UNIQUE,
     name VARCHAR (70),
-    password VARCHAR (256),
-    contacts VARCHAR (256));  
+    password VARCHAR (256) UNIQUE,
+    contacts VARCHAR (256)) UNIQUE;  
 
 CREATE TABLE lots (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
     create_date DATETIME,
     title VARCHAR (128),
     discription VARCHAR (256),
@@ -29,11 +29,13 @@ CREATE TABLE lots (
     category_id INT UNSIGNED);
 
 CREATE TABLE rates (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
     date DATETIME,
     sum INT UNSIGNED,
     rate_user_id INT UNSIGNED,
     lot_id INT UNSIGNED);
+
+
 
 
 

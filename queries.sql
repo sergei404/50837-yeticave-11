@@ -26,6 +26,8 @@ INSERT INTO rates VALUES
   (null,NOW(),6000,1,6),
   (null,(NOW() - INTERVAL 1 DAY),4000,1,8);
 
+CREATE INDEX completion_date ON users(completion_date);
+
 -- получить все катигории
 SELECT * FROM categories;
 -- получить открытые лоты, лот должен включать название, стартовую цену, ссылку на изображение, текущую цену, название категории;
