@@ -8,12 +8,12 @@ CREATE TABLE categories (
     character_code VARCHAR (70));
 
 CREATE TABLE users (
-    id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     date DATETIME,
     email VARCHAR (129) UNIQUE,
     name VARCHAR (70),
-    password VARCHAR (256) UNIQUE,
-    contacts VARCHAR (256)) UNIQUE;  
+    password VARCHAR (256),
+    contacts VARCHAR (256));  
 
 CREATE TABLE lots (
     id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
@@ -28,12 +28,17 @@ CREATE TABLE lots (
     victory_user_id INT UNSIGNED,
     category_id INT UNSIGNED);
 
+CREATE INDEX completion_date ON lots(completion_date);
+CREATE INDEX category_id ON lots(category_id);
+
 CREATE TABLE rates (
     id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
     date DATETIME,
     sum INT UNSIGNED,
     rate_user_id INT UNSIGNED,
     lot_id INT UNSIGNED);
+
+CREATE INDEX lot_id ON rates(category_id);
 
 
 
