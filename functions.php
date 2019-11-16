@@ -1,6 +1,5 @@
 <?php
-function priceFormat(float $num)
-{
+function priceFormat(float $num) {
     $num = number_format(ceil($num), 0, '', ' ');
     return "{$num}  &#8381;";
 }
@@ -37,8 +36,39 @@ function diffTime($timeValue) {
 
 
 function paddingLine(int $value): string {
-
     return str_pad($value, 2, "0", STR_PAD_LEFT);
+}
+
+// $dbh = new \PDO(
+//     'mysql:host=localhost;dbname=yeticave;',
+//     'root',
+//     ''
+// );
+// $dbh->exec("SET NAMES UTF8");
+
+// $stm = $dbh->prepare('SELECT * FROM `lots`');
+// $stm->execute();
+
+//$allUsers = $stm->fetchAll();
+
+function getDataFromDatabase($inquiry) {
+    $dataArray = [];
+    $db_connect = mysqli_connect('localhost', 'root', '', 'yeticave');
+
+    mysqli_set_charset($db_connect, "utf8");
+
+    if (!$db_connect) {
+        $error = mysqli_connect_error();
+    } else {
+        $sql = $inquiry;
+        $result = mysqli_query($db_connect, $sql);
+    
+        if ($result) {
+            $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
+    }
+
+    return $dataArray;
 }
 
 ?>

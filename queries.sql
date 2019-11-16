@@ -30,7 +30,7 @@ INSERT INTO rates VALUES
 -- получить все катигории
 SELECT * FROM categories;
 -- получить открытые лоты, лот должен включать название, стартовую цену, ссылку на изображение, текущую цену, название категории;
-SELECT  l.title, l.starting_price, l.photo, r.sum, c.title 
+SELECT  l.caption, l.starting_price, l.photo, r.sum, c.title 
 FROM lots l 
 JOIN rates r ON l.id = r.lot_id
 JOIN categories c ON l.category_id = c.id
