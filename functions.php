@@ -16,6 +16,7 @@ function include_template($name, $data) {
     $result = ob_get_clean();
     return $result;
 }
+
 function esc($str) {
     $text = htmlspecialchars($str);
 
@@ -33,42 +34,62 @@ function diffTime($timeValue) {
     return $arrayDiff;
 }
 
-
-
 function paddingLine(int $value): string {
     return str_pad($value, 2, "0", STR_PAD_LEFT);
 }
 
-// $dbh = new \PDO(
-//     'mysql:host=localhost;dbname=yeticave;',
-//     'root',
-//     ''
-// );
-// $dbh->exec("SET NAMES UTF8");
-
-// $stm = $dbh->prepare('SELECT * FROM `lots`');
-// $stm->execute();
-
-//$allUsers = $stm->fetchAll();
-
-function getDataFromDatabase($inquiry) {
-    $dataArray = [];
+function getDbConnection() {
     $db_connect = mysqli_connect('localhost', 'root', '', 'yeticave');
+
+    // Возвращаем то же самое, что и mysqli_connect при возникновении ошибки
+    if ($db_connect === false) {
+        return false;
+    }
 
     mysqli_set_charset($db_connect, "utf8");
 
-    if (!$db_connect) {
-        $error = mysqli_connect_error();
-    } else {
-        $sql = $inquiry;
-        $result = mysqli_query($db_connect, $sql);
+    return $db_connect;
+}
+
+function runSql($quiry) {
+    $db_connect = getDbConnection();
+
+    if ($db_connect === false) {
+        return false;
+    }    
     
-        if ($result) {
-            $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        }
+    $result = mysqli_query($db_connect, $quiry);
+    
+    return $result;
+}
+
+function getLots(): array {
+    $sql = 'SELECT  l.*, c.title FROM  lots l RIGHT JOIN categories c ON l.category_id = c.id ';
+
+    $result = runSql($sql);
+
+    if ($result === false) {
+        return [];
     }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    return $dataArray;
+}
+
+function getCategories(): array {
+    $sql = 'SELECT * FROM categories';
+
+    $result = runSql($sql);
+
+    if ($result === false) {
+        return [];
+    }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     return $dataArray;
 }
 
 ?>
+
