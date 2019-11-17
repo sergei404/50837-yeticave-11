@@ -1,6 +1,5 @@
 <?php
-function priceFormat(float $num)
-{
+function priceFormat(float $num):string {
     $num = number_format(ceil($num), 0, '', ' ');
     return "{$num}  &#8381;";
 }
@@ -17,14 +16,15 @@ function include_template($name, $data) {
     $result = ob_get_clean();
     return $result;
 }
-function esc($str) {
+
+function esc($str): string {
     $text = htmlspecialchars($str);
 
     return $text;
 }
 
 
-function diffTime($timeValue) {
+function diffTime($timeValue): array {
     $result = strtotime($timeValue) - time();
     $hours = floor($result / 3600);
     $minutes = floor(($result % 3600) / 60);
@@ -34,11 +34,61 @@ function diffTime($timeValue) {
     return $arrayDiff;
 }
 
-
-
 function paddingLine(int $value): string {
-
     return str_pad($value, 2, "0", STR_PAD_LEFT);
 }
 
+function getDbConnection(): mysqli {
+    $db_connect = mysqli_connect('localhost', 'root', '', 'yeticave');
+
+    if ($db_connect === false) {
+        return false;
+    }
+
+    mysqli_set_charset($db_connect, "utf8");
+
+    return $db_connect;
+}
+
+function runSql($quiry) {
+    $db_connect = getDbConnection();
+
+    if ($db_connect === false) {
+        return false;
+    }    
+    
+    $result = mysqli_query($db_connect, $quiry);
+    
+    return $result;
+}
+
+function getLots(): array {
+    $sql = 'SELECT  l.*, c.title FROM  lots l RIGHT JOIN categories c ON l.category_id = c.id ';
+
+    $result = runSql($sql);
+
+    if ($result === false) {
+        return [];
+    }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    return $dataArray;
+}
+
+function getCategories(): array {
+    $sql = 'SELECT * FROM categories';
+
+    $result = runSql($sql);
+
+    if ($result === false) {
+        return [];
+    }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    return $dataArray;
+}
+
 ?>
+

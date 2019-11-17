@@ -26,27 +26,4 @@ INSERT INTO rates VALUES
   (null,NOW(),6000,1,6),
   (null,(NOW() - INTERVAL 1 DAY),4000,1,8);
 
-
--- получить все катигории
-SELECT * FROM categories;
--- получить открытые лоты, лот должен включать название, стартовую цену, ссылку на изображение, текущую цену, название категории;
-SELECT  l.title, l.starting_price, l.photo, r.sum, c.title 
-FROM lots l 
-JOIN rates r ON l.id = r.lot_id
-JOIN categories c ON l.category_id = c.id
-WHERE completion_date > NOW();
-
--- показать лот по его id, также название категории, к которой принадлежит лот
-SELECT  l.*, c.title FROM  lots l
-LEFT JOIN categories c ON l.category_id = c.id
-WHERE l.id =1;
-
--- обновить название лота по его идентификатору
-UPDATE lots SET title = 'joker07' WHERE id = 1;
-
--- получить список ставок для лота по его идентификатору с сортировкой по дате
-SELECT l.id, r.* FROM  lots l
-JOIN rates r ON l.id = r.lot_id
-WHERE l.id = 6
-ORDER BY r.date DESC;
  

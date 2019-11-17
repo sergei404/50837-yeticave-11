@@ -3,8 +3,8 @@
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
     <ul class="promo__list">
         <?php foreach ($goods as $good): ?>
-            <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=esc($good); ?></a>
+            <li class="promo__item promo__item--<?=esc($good['character_code']); ?>">
+                <a class="promo__link" href="pages/all-lots.html"><?=esc($good['title']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -15,9 +15,9 @@
     </div>
     <ul class="lots__list">
         <?php 
-        
+            
             foreach($adverts as $advert) {
-                if((diffTime($advert['expiration date'])[0] <= 0) && (diffTime($advert['expiration date'])[1] <= 0)) {
+                if((diffTime($advert['completion_date'])[0] <= 0) && (diffTime($advert['completion_date'])[1] <= 0)) {
                     continue;
                 } else {
                     print(include_template('advert.php', ['advert' => $advert])); 

@@ -18,7 +18,7 @@ CREATE TABLE users (
 CREATE TABLE lots (
     id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
     create_date DATETIME,
-    title VARCHAR (128),
+    caption VARCHAR (128),
     discription VARCHAR (256),
     photo VARCHAR (256),
     starting_price INT UNSIGNED,
@@ -38,7 +38,7 @@ CREATE TABLE rates (
     rate_user_id INT UNSIGNED,
     lot_id INT UNSIGNED);
 
-CREATE INDEX lot_id ON rates(category_id);
+CREATE INDEX lot_id ON rates(lot_id);
 
 
 
