@@ -1,5 +1,5 @@
 <?php
-function priceFormat(float $num) {
+function priceFormat(float $num):string {
     $num = number_format(ceil($num), 0, '', ' ');
     return "{$num}  &#8381;";
 }
@@ -17,14 +17,14 @@ function include_template($name, $data) {
     return $result;
 }
 
-function esc($str) {
+function esc($str): string {
     $text = htmlspecialchars($str);
 
     return $text;
 }
 
 
-function diffTime($timeValue) {
+function diffTime($timeValue): array {
     $result = strtotime($timeValue) - time();
     $hours = floor($result / 3600);
     $minutes = floor(($result % 3600) / 60);
@@ -38,10 +38,9 @@ function paddingLine(int $value): string {
     return str_pad($value, 2, "0", STR_PAD_LEFT);
 }
 
-function getDbConnection() {
+function getDbConnection(): mysqli {
     $db_connect = mysqli_connect('localhost', 'root', '', 'yeticave');
 
-    // Возвращаем то же самое, что и mysqli_connect при возникновении ошибки
     if ($db_connect === false) {
         return false;
     }
