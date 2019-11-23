@@ -63,7 +63,7 @@ function runSql($quiry) {
 }
 
 function getLots(): array {
-    $sql = 'SELECT  l.*, c.title FROM  lots l RIGHT JOIN categories c ON l.category_id = c.id ';
+    $sql = 'SELECT  l.*, c.title FROM  lots l JOIN categories c ON l.category_id = c.id ';
 
     $result = runSql($sql);
 
@@ -75,6 +75,7 @@ function getLots(): array {
 
     return $dataArray;
 }
+
 
 function getCategories(): array {
     $sql = 'SELECT * FROM categories';
@@ -89,6 +90,34 @@ function getCategories(): array {
 
     return $dataArray;
 }
+
+function getGetParam($param) {
+    $id = filter_input(INPUT_GET, $param);
+
+    return $id;
+}
+
+
+function getLot(int $id): array {
+    
+    $sql = 'SELECT  l.*, c.title FROM  lots l JOIN categories c ON l.category_id = c.id WHERE l.id = ' .  $id . '';
+    $result = runSql($sql);
+    
+    // Проверяем, успешно ли выполнился запрос
+    if ($result === false) {
+        return [];
+    }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    
+    // В результате должн найтись именно один лот, ни больше ни меньше.
+    if (count($dataArray) !== 1) {
+        return [];
+    }
+
+    return $dataArray[0];
+}
+
 
 ?>
 
