@@ -98,9 +98,9 @@ function getGetParam($param) {
 }
 
 
-function getLot(int $id): array {
+function getLot(int $id): ?array {
 
-    if(!!$id) {
+    if((boolean)$id) {
         $sql = 'SELECT  l.*, c.title FROM  lots l JOIN categories c ON l.category_id = c.id WHERE l.id = ' .  $id . '';
     }
 
@@ -108,14 +108,14 @@ function getLot(int $id): array {
     
     // Проверяем, успешно ли выполнился запрос
     if ($result === false) {
-        return [];
+        return null;
     }
 
     $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
     
     // В результате должн найтись именно один лот, ни больше ни меньше.
     if (count($dataArray) !== 1) {
-        return [];
+        return null;
     }
 
     return $dataArray[0];

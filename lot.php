@@ -7,7 +7,7 @@ $lotId = getGetParam('id');
 
 $lot = getLot($lotId);
 
-if ($lot === []) {
+if ($lot === null) {
   $lot['caption'] = 'error';
   $page_content = $content = include_template('error.php', $lot);
 } else {
