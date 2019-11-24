@@ -98,7 +98,7 @@ function getGetParam($param) {
 }
 
 
-function getLot(int $id): ?array {
+function getLot(?int $id): ?array {
 
     if((boolean)$id) {
         $sql = 'SELECT  l.*, c.title FROM  lots l JOIN categories c ON l.category_id = c.id WHERE l.id = ' .  $id . '';
