@@ -43,8 +43,7 @@ function paddingLine(int $value): string
     return str_pad($value, 2, "0", STR_PAD_LEFT);
 }
 
-function getDbConnection(): mysqli
-{
+function getDbConnection(): mysqli {
     $db_connect = mysqli_connect('localhost', 'root', '', 'yeticave');
 
     if ($db_connect === false) {
@@ -56,8 +55,7 @@ function getDbConnection(): mysqli
     return $db_connect;
 }
 
-function runSql($quiry)
-{
+function runSql($quiry) {
     $db_connect = getDbConnection();
 
     if ($db_connect === false) {
@@ -108,8 +106,7 @@ function getGetParam($param)
 }
 
 
-function getLot(?string $id): ?array
-{
+function getLot(?string $id): ?array {
     $sql = 'SELECT  l.*, c.title FROM  lots l JOIN categories c ON l.category_id = c.id WHERE l.id = ' . $id;
     $result = runSql($sql);
 
@@ -127,3 +124,59 @@ function getLot(?string $id): ?array
 
     return $dataArray[0];
 }
+
+function db_get_prepare_stmt($link, $sql, $data = []) {
+    $stmt = mysqli_prepare($link, $sql);
+    print_r( $stmt);
+    if ($data) {
+        $types = '';
+        $stmt_data = [];
+
+        foreach ($data as $value) {
+            $type = null;
+
+            if (is_int($value)) {
+                $type = 'i';
+            }
+            else if (is_string($value)) {
+                $type = 's';
+            }
+            else if (is_double($value)) {
+                $type = 'd';
+            }
+
+            if ($type) {
+                $types .= $type;
+                $stmt_data[] = $value;
+            }
+        }
+        
+        $values = array_merge([$stmt, $types], $stmt_data);
+
+        $func = 'mysqli_stmt_bind_param';
+        $val = $func(...$values);
+        var_dump($val);
+    }
+
+    return $stmt;
+}
+
+function validateNumericalValues($num) {
+    if ($num  >  0) {
+        return null;
+    }
+
+    return "Значение не может быть меньше 0";
+}
+
+function is_date_valid(string $date) : bool {
+    $format_to_check = 'Y-m-d';
+    $dateTimeObj = date_create_from_format($format_to_check, $date);
+
+    return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
+}
+
+?>
+    
+   
+    
