@@ -2,7 +2,7 @@
     <ul class="nav__list container">
         <?php foreach ($goods as $good) : ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?= esc($good['title']); ?></a>
+                <a href="lot.php"><?= esc($good['title']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -12,7 +12,7 @@
     <div class="lot-item__content">
         <div class="lot-item__left">
             <div class="lot-item__image">
-                <img src="../<?= esc($lot['photo']); ?>" width="730" height="548" alt="Сноуборд">
+                <img src="../<?= esc($lot['photo']); ?>" width="730" height="548" alt="<?= esc($lot['caption']); ?>">
             </div>
             <p class="lot-item__category">Категория: <span><?= esc($lot['title']); ?></span></p>
             <p class="lot-item__description"><?= esc($lot['discription']); ?></p>

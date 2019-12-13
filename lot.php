@@ -11,7 +11,7 @@ if ($lot === null) {
     $lot['caption'] = 'error';
     $page_content = include_template('error.php', $lot);
 } else {
-    $page_content = include_template('lot.php', ['goods' =>  getCategories(),  'lot' => $lot]);
+    $page_content = include_template('lead.php', ['goods' =>  getCategories(),  'lot' => $lot]);
 }
 
 $layout_content = include_template('layout.php', [
@@ -24,3 +24,5 @@ $layout_content = include_template('layout.php', [
 
 
 print($layout_content);
+
+?>
