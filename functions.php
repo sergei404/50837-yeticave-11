@@ -5,8 +5,7 @@ function priceFormat(float $num): string
     return "{$num}  &#8381;";
 }
 
-function include_template($name, $data)
-{
+function include_template($name, $data) {
     $name = 'templates/' . $name;
     $result = '';
     if (!file_exists($name)) {
@@ -19,16 +18,13 @@ function include_template($name, $data)
     return $result;
 }
 
-function esc($str): string
-{
+function esc($str): string {
     $text = htmlspecialchars($str);
 
     return $text;
 }
 
-
-function diffTime($timeValue): array
-{
+function diffTime($timeValue): array {
     $result = strtotime($timeValue) - time();
     $hours = floor($result / 3600);
     $minutes = floor(($result % 3600) / 60);
@@ -38,8 +34,7 @@ function diffTime($timeValue): array
     return $arrayDiff;
 }
 
-function paddingLine(int $value): string
-{
+function paddingLine(int $value): string {
     return str_pad($value, 2, "0", STR_PAD_LEFT);
 }
 
@@ -55,6 +50,7 @@ function getDbConnection(): mysqli {
     return $db_connect;
 }
 
+
 function runSql($quiry) {
     $db_connect = getDbConnection();
 
@@ -67,8 +63,7 @@ function runSql($quiry) {
     return $result;
 }
 
-function getLots(): array
-{
+function getLots(): array {
     $sql = 'SELECT  l.*, c.title FROM  lots l JOIN categories c ON l.category_id = c.id ';
 
     $result = runSql($sql);
@@ -83,8 +78,7 @@ function getLots(): array
 }
 
 
-function getCategories(): array
-{
+function getCategories(): array {
     $sql = 'SELECT * FROM categories';
 
     $result = runSql($sql);
@@ -98,8 +92,7 @@ function getCategories(): array
     return $dataArray;
 }
 
-function getGetParam($param)
-{
+function getGetParam($param) {
     $id = filter_input(INPUT_GET, $param);
 
     return $id;
@@ -127,7 +120,7 @@ function getLot(?string $id): ?array {
 
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
-    print_r( $stmt);
+   
     if ($data) {
         $types = '';
         $stmt_data = [];
@@ -153,9 +146,8 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
         
         $values = array_merge([$stmt, $types], $stmt_data);
 
-        $func = 'mysqli_stmt_bind_param';
-        $val = $func(...$values);
-        var_dump($val);
+        $func = 'mysqli_stmt_bind_param'; 
+        $func(...$values);
     }
 
     return $stmt;
@@ -169,14 +161,12 @@ function validateNumericalValues($num) {
     return "Значение не может быть меньше 0";
 }
 
-function is_date_valid(string $date) : bool {
-    $format_to_check = 'Y-m-d';
-    $dateTimeObj = date_create_from_format($format_to_check, $date);
-
-    return $dateTimeObj !== false && array_sum(date_get_last_errors()) === 0;
+function is_date_valid(string $date)  {
+    $result = strtotime($date) -  time();
+    if ( $result  >= 86400) {
+        return null;
+    }
+    
+    return 'Введенная дата не может быть меньше нынешней плюс 1 день';
 }
-
-?>
-    
-   
-    
+ 
