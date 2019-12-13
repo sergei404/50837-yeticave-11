@@ -4,7 +4,6 @@ require_once 'functions.php';
 require_once 'data.php';
 
 $lotId = getGetParam('id');
-
 $lot = getLot($lotId);
 
 if ($lot === null) {
