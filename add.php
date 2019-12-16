@@ -1,7 +1,6 @@
 <?php
+require_once 'init.php';
 require_once 'functions.php';
-require_once 'data.php';
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required = ['starting_price', 'completion_date', 'step'];
     $errors = [];
@@ -16,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return is_date_valid($value);
         }
     ];
-
     $field = filter_input_array(INPUT_POST, ['caption'=> FILTER_DEFAULT, 'discription' => FILTER_DEFAULT, 'starting_price' => FILTER_DEFAULT, 'completion_date' => FILTER_DEFAULT,  'step' => FILTER_DEFAULT, 'category_id' => FILTER_DEFAULT], true);
     
     foreach ($field as $key =>$value) {
@@ -48,11 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errors)) {
 		$page_content = include_template('form.php', ['field' => $field, 'errors' => $errors, 'goods' =>  getCategories()]);
 	} else {
-        $sql = 'INSERT INTO lots (create_date, caption, discription,  photo, starting_price, completion_date, step, author_user_id, category_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)';
+        $sql = 'INSERT INTO lots (create_date, caption, discription,  photo, starting_price, completion_date, step, author_user_id, category_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
        
-        $data = [$field['caption'], $field['discription'], $field['photo'], $field['starting_price'], $field['completion_date'],  $field['step'], $field['category_id']];
+        $data = [$field['caption'], $field['discription'], $field['photo'], $field['starting_price'], $field['completion_date'],  $field['step'], $_SESSION['user']['id'], $field['category_id']];
        
-        $link = getDbConnection();
         $stmt = db_get_prepare_stmt($link, $sql, $data);
         $res = mysqli_stmt_execute($stmt);
         if ($res) {
@@ -63,15 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else {
         $page_content = include_template('form.php', ['errors' => [], 'goods' =>  getCategories()]);
 }
-
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'goods' =>  getCategories(),
     'title' => 'Добавить лот',
-    'isAuth' => $is_auth,
-    'nameUser' => $user_name,
 ]);
-
 print($layout_content);
-
 ?>
