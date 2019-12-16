@@ -7,14 +7,14 @@
         <?php endforeach; ?>
     </ul>
 </nav>
-<form class="form form--add-lot container <?= (count($errors) >= 1)  ?  'form--invalid' : ''; ?>" action="add.php" method="post" enctype="multipart/form-data">
+<form class="form form--add-lot container <?= count($errors) ?  'form--invalid' : ''; ?>" action="add.php" method="post" enctype="multipart/form-data">
     <!-- form--invalid -->
     <h2>Добавление лота</h2>
     <div class="form__container-two">
         <div class="form__item">
             <!-- form__item--invalid -->
             <label for="lot-name">Наименование <sup>*</sup></label>
-            <input id="lot-name" type="text" name="caption" placeholder="Введите наименование лота" value="<?= (count($errors) >= 1)  ?  $field['caption'] : ''; ?>">
+            <input id="lot-name" type="text" name="caption" placeholder="Введите наименование лота" value="<?= count($errors)  ?  $field['caption'] : ''; ?>">
             <!-- <span class="form__error">Введите наименование лота</span> -->
         </div>
         <div class="form__item">
@@ -35,7 +35,7 @@
     </div>
     <div class="form__item form__item--wide">
         <label for="message">Описание <sup>*</sup></label>
-        <textarea id="message" name="discription" placeholder="Напишите описание лота" ><?=(count($errors) >= 1)  ?  $field['discription'] : '';?></textarea>
+        <textarea id="message" name="discription" placeholder="Напишите описание лота" ><?= count($errors)  ?  $field['discription'] : '';?></textarea>
         <span class="form__error">Напишите описание лота</span>
     </div>
     <div class="form__item form__item--file">
@@ -51,18 +51,18 @@
     <div class="form__container-three">
         <div class="form__item form__item--small <?= isset($errors['starting_price']) ? 'form__item--invalid' : ''; ?>">
             <label for="lot-rate">Начальная цена <sup>*</sup></label>
-            <input id="lot-rate" type="text" name="starting_price" placeholder="0" value="<?= (count($errors) >= 1)  ?  $field['starting_price'] : ''; ?>">
+            <input id="lot-rate" type="text" name="starting_price" placeholder="0" value="<?= count($errors) ?  $field['starting_price'] : ''; ?>">
             <span class="form__error"><?= isset($errors['starting_price']) ? 'Заполните это поле' : ''; ?></span>
         </div>
        
         <div class="form__item form__item--small <?=  isset($errors['step']) ? 'form__item--invalid' : ''; ?>">
             <label for="lot-step">Шаг ставки <sup>*</sup></label>
-            <input id="lot-step" type="text" name="step" placeholder="0" value="<?= (count($errors) >= 1)  ?  $field['step'] : ''; ?>">
+            <input id="lot-step" type="text" name="step" placeholder="0" value="<?= count($errors)  ?  $field['step'] : ''; ?>">
             <span class="form__error"><?= isset($errors['step']) ? 'Заполните это поле' : ''; ?></span>
         </div>
         <div class="form__item <?= isset($errors['completion_date']) ? 'form__item--invalid' : ''; ?>">
             <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
-            <input class="form__input-date" id="lot-date" type="text" name="completion_date" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?= (count($errors) >= 1)  ?  $field['completion_date'] : ''; ?>">
+            <input class="form__input-date" id="lot-date" type="text" name="completion_date" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value="<?= count($errors) ?  $field['completion_date'] : ''; ?>">
             <span class="form__error"><?= isset($errors['completion_date']) ? 'Заполните это поле' : ''; ?></span>
         </div>
     </div>
