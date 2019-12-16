@@ -1,7 +1,7 @@
 <?php
 
+require_once 'init.php';
 require_once 'functions.php';
-require_once 'data.php';
 
 $tpl_data = [];
 
@@ -15,9 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (in_array($key, $fields) && empty($value)) {
         $errors[$key] = "Это поле надо заполнить";
     }
-}
+  }
 
-  $link = getDbConnection();
   if (empty($errors)) {
     $email = mysqli_real_escape_string($link, $form['password']);
     $sql = "SELECT id FROM users WHERE email = '$email'";
@@ -51,8 +50,6 @@ $layout_content = include_template('layout.php', [
     'content'    => $page_content,
     'goods' => [],
     'title' => 'Yeticave | Регистрация',
-    'isAuth' => $is_auth,
-    'nameUser' => $user_name,
 ]);
 
 print($layout_content);
