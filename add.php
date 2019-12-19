@@ -49,7 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = 'INSERT INTO lots (create_date, caption, discription,  photo, starting_price, completion_date, step, author_user_id, category_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
        
         $data = [$field['caption'], $field['discription'], $field['photo'], $field['starting_price'], $field['completion_date'],  $field['step'], $_SESSION['user']['id'], $field['category_id']];
-       
+        
+        $link =  getDbConnection();
         $stmt = db_get_prepare_stmt($link, $sql, $data);
         $res = mysqli_stmt_execute($stmt);
         if ($res) {
@@ -63,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'goods' =>  getCategories(),
-    'title' => 'Добавить лот',
+    'title' =>  'Yeticave - Добавить лот',
 ]);
 print($layout_content);
 ?>
