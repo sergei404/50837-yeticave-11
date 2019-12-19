@@ -30,6 +30,7 @@ CREATE TABLE lots (
 
 CREATE INDEX completion_date ON lots(completion_date);
 CREATE INDEX category_id ON lots(category_id);
+CREATE FULLTEXT INDEX lot_search ON lots (caption, discription);
 
 CREATE TABLE rates (
     id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,

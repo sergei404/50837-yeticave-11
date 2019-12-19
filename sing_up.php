@@ -12,7 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[$key] = "Это поле надо заполнить";
     }
   }
-
+  
+  $link =  getDbConnection();
   if (empty($errors)) {
     $email = mysqli_real_escape_string($link, $form['password']);
     $sql = "SELECT id FROM users WHERE email = '$email'";
