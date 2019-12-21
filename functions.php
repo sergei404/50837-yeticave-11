@@ -1,4 +1,5 @@
 <?php
+
 function priceFormat(float $num): string {
     $num = number_format(ceil($num), 0, '', ' ');
     return "{$num}  &#8381;";
@@ -154,5 +155,40 @@ function getSearchLots(?string $str): array {
 	$result = mysqli_stmt_get_result($stmt);
 
     $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $dataArray;
+}
+
+
+function getMaxRate($id) {
+    $sql = "SELECT MAX(r.sum) FROM rates r WHERE r.lot_id = " .  $id;
+
+    $result = mysqli_fetch_all(runSql($sql), MYSQLI_ASSOC);
+    if(count($result) === 0) {
+        return null;
+    }
+
+    $sum = (integer) $result[0]['MAX(r.sum)'];
+    
+    return $sum;
+}
+
+function saveRate(...$data) {
+    $sql = 'INSERT INTO rates (date, sum, rate_user_id,  lot_id) VALUES (NOW(), ?, ?, ?)';
+    $link =  getDbConnection();
+    $stmt = db_get_prepare_stmt($link, $sql, $data);
+    $res = mysqli_stmt_execute($stmt);
+}
+
+function getRate(?string $id): ?array  {
+    
+    $sql = "SELECT r.date, r.sum, l.id, l.photo, l.caption, l.completion_date, c.title FROM rates r JOIN lots l ON r.lot_id = l.id JOIN categories c ON l.category_id = c.id WHERE r.rate_user_id = " . $id;
+    $result = runSql($sql);
+    
+    if ($result === false) {
+        return [];
+    }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    
     return $dataArray;
 }
