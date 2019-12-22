@@ -5,10 +5,10 @@ require_once 'functions.php';
 
 $userId = $_SESSION['user']['id'];
 
-$ratesArray = getRate($userId);
+$ratesArray = showMyRates($userId);
 
 
-$page_content = include_template('my-bets.php', ['goods' =>  getCategories(), 'array' => $ratesArray]);
+$page_content = include_template('my-bets.php', ['goods' =>  getCategories(), 'arrayBets' => $ratesArray]);
 
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
