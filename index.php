@@ -1,6 +1,7 @@
 <?php
 require_once 'init.php';
 require_once 'functions.php';
+require_once 'getwinner.php';
 
 $page_content = include_template('main.php', [
     'adverts' => getLots(),

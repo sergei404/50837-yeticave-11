@@ -2,47 +2,38 @@
 require_once 'init.php';
 require_once 'functions.php';
 
+
 $lotId = getParam('id');
 $lot = getLot($lotId);
-$userId = $_SESSION['user']['id'];
 $errors = [];
+$result = [];
+$result = getRate($lotId);
+$currentPrice = $result ? $result[0]['sum'] : $lot['starting_price'];
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
     $cost = $_POST['cost'];
-    
-    if(is_numeric($cost) && (integer) $cost > 0) {
-        $currentPrice = $lot['starting_price'];
+    $userId = isset($_SESSION['user']) ? $_SESSION['user']['id'] : null;
+    if (is_numeric($cost) && (int) $cost > 0) {
+        $value = $currentPrice + (int) $lot['step'];
 
-        $rate = getMaxRate($lotId);
-       
-        if ($rate !== null) {
-            $currentPrice = $rate;
-        }
-
-        if ($cost >= $currentPrice + (integer)$lot['step']) {
+        if ($cost >= $value) {
             saveRate($cost, $userId, $lotId);
-        //    $result = getRate($lot['id']);
-        //    var_dump($result);
-        }
-        else {
-            $value = $currentPrice + (integer) $lot['step'];
+            $result = getRate($lotId);
+        } else {
             $errors['text'] = "Ваша ставка не может быть меньше чем $value";
         }
-    }
-    else {
+    } else {
         $errors['text'] = 'Введите число';
     }
 }
 
 if ($lot === null) {
     $page_content = include_template('error.php', [$lot,  'http' => 'Ошибка 404']);
-} 
-elseif(count($errors)) {
-    $page_content = include_template('lead.php', ['goods' =>  getCategories(),  'lot' => $lot,  'error' => $errors,]);
-}
-else {
-    $page_content = include_template('lead.php', ['goods' =>  getCategories(),  'lot' => $lot, ]);
+} elseif (count($errors)) {
+    $page_content = include_template('lead.php', ['goods' =>  getCategories(),  'lot' => $lot,  'error' => $errors, 'rates' => $result, 'currentPrice' => $currentPrice, ]);
+} else {
+    $page_content = include_template('lead.php', ['goods' =>  getCategories(),  'lot' => $lot, 'rates' => $result, 'currentPrice' => $currentPrice,]);
 }
 
 $layout_content = include_template('layout.php', [

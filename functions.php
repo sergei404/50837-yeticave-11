@@ -158,30 +158,30 @@ function getSearchLots(?string $str): array {
     return $dataArray;
 }
 
-
-function getMaxRate($id) {
-    $sql = "SELECT MAX(r.sum) FROM rates r WHERE r.lot_id = " .  $id;
-
-    $result = mysqli_fetch_all(runSql($sql), MYSQLI_ASSOC);
-    if(count($result) === 0) {
-        return null;
-    }
-
-    $sum = (integer) $result[0]['MAX(r.sum)'];
-    
-    return $sum;
-}
-
-function saveRate(...$data) {
+function saveRate($cost, $userId, $lotId): void {
     $sql = 'INSERT INTO rates (date, sum, rate_user_id,  lot_id) VALUES (NOW(), ?, ?, ?)';
+    $data = [$cost, $userId, $lotId];
     $link =  getDbConnection();
     $stmt = db_get_prepare_stmt($link, $sql, $data);
     $res = mysqli_stmt_execute($stmt);
 }
 
 function getRate(?string $id): ?array  {
+    $sql = "SELECT r.sum, r.date, u.name FROM lots l JOIN rates r ON l.id = r.lot_id   JOIN users u ON r.rate_user_id = u.id  WHERE l.id = \"$id\" ORDER BY r.sum DESC";
+    $result = runSql($sql);
     
-    $sql = "SELECT r.date, r.sum, l.id, l.photo, l.caption, l.completion_date, c.title FROM rates r JOIN lots l ON r.lot_id = l.id JOIN categories c ON l.category_id = c.id WHERE r.rate_user_id = " . $id;
+    if ($result === false) {
+        return [];
+    }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    
+    return $dataArray;
+}
+
+function showMyRates(?string $id): ?array  {
+    
+    $sql = "SELECT r.date, r.sum, l.id, l.photo, l.caption, l.completion_date, c.title, u.contacts FROM rates r JOIN lots l ON r.lot_id = l.id JOIN categories c ON l.category_id = c.id JOIN users u ON r.rate_user_id = u.id WHERE r.rate_user_id = " . $id;
     $result = runSql($sql);
     
     if ($result === false) {

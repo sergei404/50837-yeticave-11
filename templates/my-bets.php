@@ -11,8 +11,8 @@
     <h2>Мои ставки</h2>
     <table class="rates__list">
         <?php
-            foreach ($array as $arr) {
-                print(include_template('bets-table.php', ['arr' => $arr]));
+            foreach ($arrayBets as $bet) {
+                print(include_template('bets-table.php', ['bet' => $bet]));
             }
         ?>
     </table>
