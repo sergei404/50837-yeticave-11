@@ -2,24 +2,23 @@
 require_once 'init.php';
 require_once 'functions.php';
 
+
 $lotId = getParam('id');
 $lot = getLot($lotId);
-$userId = isset($_SESSION['user']) ? $_SESSION['user']['id'] : null;
 $errors = [];
 $result = [];
 $result = getRate($lotId);
 $currentPrice = $result ? $result[0]['sum'] : $lot['starting_price'];
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
     $cost = $_POST['cost'];
-
+    $userId = isset($_SESSION['user']) ? $_SESSION['user']['id'] : null;
     if (is_numeric($cost) && (int) $cost > 0) {
         $value = $currentPrice + (int) $lot['step'];
 
         if ($cost >= $value) {
             saveRate($cost, $userId, $lotId);
-            var_dump($lotId);
             $result = getRate($lotId);
         } else {
             $errors['text'] = "Ваша ставка не может быть меньше чем $value";

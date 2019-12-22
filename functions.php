@@ -181,7 +181,7 @@ function getRate(?string $id): ?array  {
 
 function showMyRates(?string $id): ?array  {
     
-    $sql = "SELECT r.date, r.sum, l.id, l.photo, l.caption, l.completion_date, c.title FROM rates r JOIN lots l ON r.lot_id = l.id JOIN categories c ON l.category_id = c.id WHERE r.rate_user_id = " . $id;
+    $sql = "SELECT r.date, r.sum, l.id, l.photo, l.caption, l.completion_date, c.title, u.contacts FROM rates r JOIN lots l ON r.lot_id = l.id JOIN categories c ON l.category_id = c.id JOIN users u ON r.rate_user_id = u.id WHERE r.rate_user_id = " . $id;
     $result = runSql($sql);
     
     if ($result === false) {
