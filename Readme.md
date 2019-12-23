@@ -48,27 +48,6 @@ git clone SSH-адрес_вашего_форка
 
 #### 4. Начинайте обучение!
 
-##### Запуск проекта с использованием docker
-
-1. Установите docker и docker-compose.
-
-1. Настройте переменные запуска
-
-Нужно скопировать .etv.template в .env и задать значения переменным окружения. Поддерживается два варианта запуска - с
-маппингом порта прямо на хост и с использованием traefik. Выбор варианты выполняется через указание соответствующего
-конфига в .env.
-
-1. Выполните команду в директории проекта
-
-```sh
-docker-compose up --build
-```
-
-Если запускать с конфигом `docker-compose.direct` сайт будет доступн по любому имени внутри .localhost с указанным портом,
-например: http://yeticave.localhost:8080.
-
-Если запускать с конфигом `docker-compose.traefik` - сайт будет доступен по указанному HOST по порту 80, например
-http://yeticave.docker.localhost.
 ---
 
 <a href="https://htmlacademy.ru/intensive/php"><img align="left" width="50" height="50" alt="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/php/logo-for-github-2.png"></a>
