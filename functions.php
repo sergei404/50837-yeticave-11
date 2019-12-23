@@ -131,6 +131,27 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     return $stmt;
 }
 
+function validateLength($value, $min, $max) {
+    if ($value) {
+        $len = strlen($value);
+        if ($len < $min or $len > $max) {
+            return "Значение должно быть от $min до $max символов";
+        }
+    }
+
+    return null;
+}
+
+function validateCategory($categoriesId) {
+    $sql = "SELECT title FROM categories WHERE id =" . $categoriesId;
+    $result = runSql($sql);
+    if ($result === false) {
+        return "Указана несуществующая категория";
+    }
+
+    return null;
+}
+
 function validateNumericalValues($num) {
     if ($num  >  0) {
         return null;
@@ -158,6 +179,19 @@ function getSearchLots(?string $str): array {
     return $dataArray;
 }
 
+function getSortedLots(?string $categoriesId): array {
+    $sql = 'SELECT  l.*, c.title FROM  lots l JOIN categories c ON l.category_id = c.id  WHERE c.id = ' . $categoriesId;
+    $result = runSql($sql);
+    
+    if ($result === false) {
+        return [];
+    }
+
+    $dataArray = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    
+    return $dataArray;
+}
+
 function saveRate($cost, $userId, $lotId): void {
     $sql = 'INSERT INTO rates (date, sum, rate_user_id,  lot_id) VALUES (NOW(), ?, ?, ?)';
     $data = [$cost, $userId, $lotId];
@@ -166,8 +200,8 @@ function saveRate($cost, $userId, $lotId): void {
     $res = mysqli_stmt_execute($stmt);
 }
 
-function getRate(?string $id): ?array  {
-    $sql = "SELECT r.sum, r.date, u.name FROM lots l JOIN rates r ON l.id = r.lot_id   JOIN users u ON r.rate_user_id = u.id  WHERE l.id = \"$id\" ORDER BY r.sum DESC";
+function getRate(?string $lotId): ?array  {
+    $sql = "SELECT r.rate_user_id, r.sum, r.date, u.name FROM lots l JOIN rates r ON l.id = r.lot_id   JOIN users u ON r.rate_user_id = u.id  WHERE l.id = \"$lotId\" ORDER BY r.sum DESC";
     $result = runSql($sql);
     
     if ($result === false) {

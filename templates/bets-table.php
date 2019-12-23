@@ -1,7 +1,7 @@
 <tr class="rates__item">
     <td class="rates__info">
         <div class="rates__img">
-            <img src="../img/<?= esc($bet['photo']); ?>" width="54" height="40" alt="Сноуборд">
+            <img src="../uploads/<?= esc($bet['photo']); ?>" width="54" height="40" alt="Сноуборд">
         </div>
         <h3 class="rates__title"><a href="lot.php/?id=<?= esc($bet['id']); ?>"><?= esc($bet['caption']); ?></a></h3>
     </td>

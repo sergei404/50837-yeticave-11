@@ -4,7 +4,7 @@
     <ul class="promo__list">
         <?php foreach ($goods as $good): ?>
             <li class="promo__item promo__item--<?=esc($good['character_code']); ?>">
-                <a class="promo__link" href="pages/all-lots.html"><?=esc($good['title']); ?></a>
+                <a class="promo__link" href="../sorted.php/?id=<?= esc($good['id']);?>"><?=esc($good['title']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>

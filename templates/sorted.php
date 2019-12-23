@@ -10,7 +10,7 @@
 <div class="container">
   <section class="lots">
     <?php if (count($lots) !== 0) : ?>
-      <h2>Результаты поиска по запросу «<span><?= $search;?></span>»</h2>
+      <h2>Результаты поиска по запросу «<span><?= $title?></span>»</h2>
     <?php else : ?>
       <h2>Ничего не найдено по вашему запросу</h2>
     <?php endif; ?>

@@ -17,7 +17,7 @@
                 <a href="/" class="main-header__logo">
                     <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
                 </a>
-                <form class="main-header__search" method="get" action="search.php" autocomplete="off">
+                <form class="main-header__search" method="get" action="../search.php" autocomplete="off">
                     <input type="search" name="search" placeholder="Поиск лота">
                     <input class="main-header__search-btn" type="submit" name="find" value="Найти">
                 </form>
@@ -36,7 +36,7 @@
                     <?php else : ?>
                         <ul class="user-menu__list">
                             <li class="user-menu__item">
-                                <a href="../sing_up.php">Регистрация</a>
+                                <a href="../registration.php">Регистрация</a>
                             </li>
                             <li class="user-menu__item">
                                 <a href="../enter.php">Вход</a>
@@ -57,7 +57,7 @@
                 <!--заполните этот список из массива категорий-->
                 <?php foreach ($goods as $good) : ?>
                     <li class="nav__item">
-                        <a href="pages/all-lots.html"><?= esc($good['title']); ?></a>
+                        <a href="../sorted.php/?id=<?= esc($good['id']);?>"><?= esc($good['title']); ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>

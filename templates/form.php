@@ -2,7 +2,7 @@
     <ul class="nav__list container">
         <?php foreach ($goods as $good) : ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?= esc($good['title']); ?></a>
+                <a href="../sorted.php/?id=<?= esc($good['id']);?>"><?= esc($good['title']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -35,7 +35,7 @@
     </div>
     <div class="form__item form__item--wide">
         <label for="message">Описание <sup>*</sup></label>
-        <textarea id="message" name="discription" placeholder="Напишите описание лота" ><?= count($errors)  ?  $field['discription'] : '';?></textarea>
+        <textarea id="message" name="discription" placeholder="Напишите описание лота"  required><?= count($errors)  ?  $field['discription'] : '';?></textarea>
         <span class="form__error">Напишите описание лота</span>
     </div>
     <div class="form__item form__item--file">

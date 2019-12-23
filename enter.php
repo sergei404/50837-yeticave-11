@@ -23,7 +23,7 @@
      if ($user['email'] !== $email && $email !== ''){
         $errors['email'] = 'Такой пользователь не найден';
      }
-     elseif ($email == '') {
+     elseif ($email === '') {
         $errors['email'] = "Это поле надо заполнить";
      }
      else {
@@ -38,7 +38,7 @@
          }
      }
      
-     if (count($errors)) {
+     if (count($errors) !== 0) {
          $page_content = include_template('enter_form.php', ['form' => $form, 'errors' => $errors]);
      }
      else {
