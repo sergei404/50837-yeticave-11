@@ -2,7 +2,7 @@
     <ul class="nav__list container">
         <?php foreach ($goods as $good) : ?>
             <li class="nav__item">
-                <a href="lot.php"><?= esc($good['title']); ?></a>
+                <a href="../sorted.php/?id=<?= esc($good['id']);?>"><?= esc($good['title']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>

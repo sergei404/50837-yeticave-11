@@ -2,14 +2,10 @@
 require_once 'init.php';
 require_once 'functions.php';
 
-$lots = [];
-$link =  getDbConnection();
-
-$search = $_GET['search'] ?? '';
-
-if ($search) {
+if (isset($_GET['search'])) {
+    $search = trim($_GET['search']) ;
     $lots = getSearchLots($search);
-    if (count($lots) ==  0) {
+    if (count($lots) ===  0) {
         $page_content = include_template('search.php', ['goods' =>  getCategories(),  'lots' => []]);
     }
     else {

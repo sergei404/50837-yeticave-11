@@ -2,7 +2,7 @@
     <ul class="nav__list container">
         <?php foreach ($goods as $good) : ?>
             <li class="nav__item">
-                <a href="lot.php"><?= esc($good['title']); ?></a>
+                <a href="../sorted.php/?id=<?= esc($good['id']);?>"><?= esc($good['title']); ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -41,10 +41,11 @@
                     <form class="lot-item__form" action="../lot.php/?id=<?= esc($lot['id']); ?>" method="post" autocomplete="off">
                         <p class="lot-item__form-item form__item <?= count($error) > 0 ? 'form__item--invalid' : ''; ?>">
                             <label for="cost">Ваша ставка</label>
-                            <input id="cost" type="text" name="cost" placeholder="12 000">
+                            <input id="cost" type="text" name="cost" placeholder="12 000" <?= $authorRate ? 'disabled' : '';?><?= $lotСreator ? 'disabled' : '';?>>
                             <span class="form__error"><?= $error['text']; ?></span>
                         </p>
-                        <button type="submit" class="button">Сделать ставку</button>
+
+                        <button type="submit" class="button" <?= $authorRate  ? 'disabled' : '';?><?=  $lotСreator ? 'disabled' : '';?>>Сделать ставку</button>
                     </form>
                 </div>
             <?php endif; ?>

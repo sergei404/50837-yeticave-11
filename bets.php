@@ -3,7 +3,9 @@
 require_once 'init.php';
 require_once 'functions.php';
 
-$userId = $_SESSION['user']['id'];
+if(isset($_SESSION['user']['id'])) {
+    $userId = $_SESSION['user']['id'];
+}
 
 $ratesArray = showMyRates($userId);
 

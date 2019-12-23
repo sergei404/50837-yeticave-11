@@ -2,8 +2,10 @@
 require_once 'init.php';
 require_once 'functions.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $required = ['starting_price', 'completion_date', 'step'];
+    $required = ['starting_price', 'completion_date', 'step', 'category_id'];
     $errors = [];
+    
+    $field = filter_input_array(INPUT_POST, ['caption'=> FILTER_DEFAULT, 'discription' => FILTER_DEFAULT, 'starting_price' => FILTER_DEFAULT, 'completion_date' => FILTER_DEFAULT,  'step' => FILTER_DEFAULT, 'category_id' => FILTER_DEFAULT], true);
     $rules = [
         'starting_price' => function($value)  {
             return validateNumericalValues($value);
@@ -13,12 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         },
         'completion_date' => function($value) {
             return is_date_valid($value);
+        },
+        'category_id' => function($value) {
+            return validateCategory($value);
         }
     ];
-    $field = filter_input_array(INPUT_POST, ['caption'=> FILTER_DEFAULT, 'discription' => FILTER_DEFAULT, 'starting_price' => FILTER_DEFAULT, 'completion_date' => FILTER_DEFAULT,  'step' => FILTER_DEFAULT, 'category_id' => FILTER_DEFAULT], true);
     
     foreach ($field as $key =>$value) {
-        
         if (isset($rules[$key])) {
             $rule = $rules[$key];
             $errors[$key] = $rule($value);
@@ -34,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
         
-        if ($file_type != "image/png" && $file_type != "image/jpeg" && $file_type != "image/jpg" ) {
+        if ($file_type !== "image/png" && $file_type !== "image/jpeg" && $file_type !== "image/jpg" ) {
             $errors['file'] = 'Загрузите картинку в формате png, jpeg или jpg';
         } else {
             $filename = uniqid() . '.' . explode('/', $file_type)[1];
@@ -43,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } 	
     
-    if (count($errors)) {
+    if (count($errors) !==0) {
 		$page_content = include_template('form.php', ['field' => $field, 'errors' => $errors, 'goods' =>  getCategories()]);
 	} else {
         $sql = 'INSERT INTO lots (create_date, caption, discription,  photo, starting_price, completion_date, step, author_user_id, category_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -67,4 +70,3 @@ $layout_content = include_template('layout.php', [
     'title' =>  'Yeticave - Добавить лот',
 ]);
 print($layout_content);
-?>
